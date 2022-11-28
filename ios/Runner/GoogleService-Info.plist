@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>181760295083-m63e6cvu399nlo34l9sbnc376aupk4j1.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.181760295083-m63e6cvu399nlo34l9sbnc376aupk4j1</string>
+	<key>API_KEY</key>
+	<string>AIzaSyA0-AhsGq7uYxCkTwLOtwJGKsjrWH-PHiI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>181760295083</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.rentzyRpl</string>
+	<key>PROJECT_ID</key>
+	<string>rentzy-5aab0</string>
+	<key>STORAGE_BUCKET</key>
+	<string>rentzy-5aab0.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:181760295083:ios:5b91ed3401fbe3527cf7ee</string>
+</dict>
+</plist>
