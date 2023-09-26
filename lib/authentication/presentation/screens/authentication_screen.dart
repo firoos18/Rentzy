@@ -64,6 +64,25 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
               isLogin = true;
             });
           }
+          if (state is Exception) {
+            Navigator.pop(context);
+            showAdaptiveDialog(
+              context: context,
+              builder: (context) => AlertDialog.adaptive(
+                title: const Text(
+                  'Exception Occured',
+                ),
+                icon: Icon(
+                  FeatherIcons.alertTriangle,
+                  color: Colors.red.shade900,
+                ),
+                alignment: Alignment.center,
+                content: Text(
+                  state.firebaseAuthException!.code.replaceAll('-', ' '),
+                ),
+              ),
+            );
+          }
         },
         builder: (context, state) {
           return Center(

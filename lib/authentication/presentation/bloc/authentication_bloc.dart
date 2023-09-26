@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:rentzy_rpl/authentication/domain/entity/login_data_entity.dart';
+import 'package:rentzy_rpl/authentication/domain/entity/login_entity.dart';
 import 'package:rentzy_rpl/authentication/domain/entity/register_data_entity.dart';
+import 'package:rentzy_rpl/authentication/domain/entity/register_entity.dart';
 import 'package:rentzy_rpl/authentication/domain/usecase/login_using_email_password_usecase.dart';
 import 'package:rentzy_rpl/authentication/domain/usecase/register_user_usecase.dart';
 
@@ -22,31 +24,32 @@ class AuthenticationBloc
 
   void onLogin(OnLogin event, Emitter<AuthenticationState> emit) async {
     emit(AuthenticationLoading());
-    UserCredential user = await loginUsingEmailPassword.authenticationRepository
+    final LoginEntity data = await loginUsingEmailPassword
+        .authenticationRepository
         .loginUsingEmailPassword(
       loginData: LoginDataEntity(
           emailAddress: event.emailAddress, password: event.password),
     );
 
-    if (loginUsingEmailPassword.authenticationRepository.isAuthenticated()) {
-      emit(Authenticated(user.user?.uid));
+    if (data.userCredential?.user != null) {
+      emit(Authenticated(data.userCredential?.credential?.accessToken));
     } else {
-      emit(Unauthenticated());
+      emit(Exception(data.firebaseAuthException!));
     }
   }
 
   void onRegister(OnRegister event, Emitter<AuthenticationState> emit) async {
     emit(AuthenticationLoading());
-    UserCredential user =
+    final RegisterEntity data =
         await registerUseCase.authenticationRepository.registerUser(
       registerData: RegisterDataEntity(
           emailAddress: event.emailAddress, password: event.password),
     );
 
-    if (user.user?.uid != null) {
+    if (data.userCredential?.user?.uid != null) {
       emit(Registered());
     } else {
-      emit(AuthenticationInitial());
+      emit(Exception(data.firebaseAuthException!));
     }
   }
 }

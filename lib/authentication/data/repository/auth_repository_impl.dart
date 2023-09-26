@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rentzy_rpl/authentication/data/models/login_model.dart';
+import 'package:rentzy_rpl/authentication/data/models/register_model.dart';
 import 'package:rentzy_rpl/authentication/domain/entity/login_data_entity.dart';
 import 'package:rentzy_rpl/authentication/domain/entity/register_data_entity.dart';
 import 'package:rentzy_rpl/authentication/domain/repository/auth_repository.dart';
@@ -15,26 +17,45 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }
 
   @override
-  Future<UserCredential> loginUsingEmailPassword({LoginDataEntity? loginData}) {
-    return FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: loginData?.emailAddress as String,
-        password: loginData?.password as String);
+  Future<LoginModel> loginUsingEmailPassword(
+      {LoginDataEntity? loginData}) async {
+    try {
+      if (loginData != null) {
+        final UserCredential userCredential =
+            await firebaseAuth.signInWithEmailAndPassword(
+                email: loginData.emailAddress!, password: loginData.password!);
+
+        return LoginModel(userCredential: userCredential);
+      } else {
+        return LoginModel(
+            firebaseAuthException: FirebaseAuthException(code: 'unknown'));
+      }
+    } on FirebaseAuthException catch (e) {
+      return LoginModel(
+          firebaseAuthException: FirebaseAuthException(code: e.code));
+    }
   }
 
   @override
-  Future<UserCredential> registerUser(
-      {RegisterDataEntity? registerData}) async {
+  Future<RegisterModel> registerUser({RegisterDataEntity? registerData}) async {
     try {
       if (registerData != null) {
-        return await firebaseAuth.createUserWithEmailAndPassword(
+        final UserCredential userCredential =
+            await firebaseAuth.createUserWithEmailAndPassword(
           email: registerData.emailAddress!,
           password: registerData.password!,
         );
+
+        return RegisterModel(userCredential: userCredential);
       } else {
-        throw FirebaseAuthException(code: '');
+        return RegisterModel(
+          firebaseAuthException: FirebaseAuthException(code: 'unknown'),
+        );
       }
     } on FirebaseAuthException catch (e) {
-      throw FirebaseAuthException(code: e.code);
+      return RegisterModel(
+        firebaseAuthException: FirebaseAuthException(code: e.code),
+      );
     }
   }
 
