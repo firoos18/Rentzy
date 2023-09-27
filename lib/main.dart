@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentzy_rpl/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:rentzy_rpl/core/di/injection.dart';
+import 'package:rentzy_rpl/motorcycle_list/presentation/bloc/home_bloc.dart';
 import 'package:rentzy_rpl/motorcycle_list/presentation/screens/home_screen.dart';
 import 'firebase_options.dart';
 
@@ -19,6 +20,7 @@ Future<void> main() async {
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider<AuthenticationBloc>(create: (_) => injection()),
+      BlocProvider<HomeBloc>(create: (_) => injection()),
     ],
     child: MaterialApp(
       theme: ThemeData(
