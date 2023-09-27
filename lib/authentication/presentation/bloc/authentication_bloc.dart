@@ -6,6 +6,7 @@ import 'package:rentzy_rpl/authentication/domain/entity/login_entity.dart';
 import 'package:rentzy_rpl/authentication/domain/entity/register_data_entity.dart';
 import 'package:rentzy_rpl/authentication/domain/entity/register_entity.dart';
 import 'package:rentzy_rpl/authentication/domain/usecase/login_using_email_password_usecase.dart';
+import 'package:rentzy_rpl/authentication/domain/usecase/on_app_open_usecase.dart';
 import 'package:rentzy_rpl/authentication/domain/usecase/register_user_usecase.dart';
 
 part 'authentication_event.dart';
@@ -15,11 +16,16 @@ class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   LoginUsingEmailPasswordUseCase loginUsingEmailPassword;
   RegisterUseCase registerUseCase;
+  OnAppOpenUsecase onAppOpenUsecase;
 
-  AuthenticationBloc(this.loginUsingEmailPassword, this.registerUseCase)
-      : super(AuthenticationInitial()) {
+  AuthenticationBloc(
+    this.loginUsingEmailPassword,
+    this.registerUseCase,
+    this.onAppOpenUsecase,
+  ) : super(AuthenticationInitial()) {
     on<OnLogin>(onLogin);
     on<OnRegister>(onRegister);
+    on<OnAppOpen>(onAppOpen);
   }
 
   void onLogin(OnLogin event, Emitter<AuthenticationState> emit) async {
@@ -32,7 +38,7 @@ class AuthenticationBloc
     );
 
     if (data.userCredential?.user != null) {
-      emit(Authenticated(data.userCredential?.credential?.accessToken));
+      emit(Authenticated());
     } else {
       emit(Exception(data.firebaseAuthException!));
     }
@@ -50,6 +56,17 @@ class AuthenticationBloc
       emit(Registered());
     } else {
       emit(Exception(data.firebaseAuthException!));
+    }
+  }
+
+  void onAppOpen(OnAppOpen event, Emitter<AuthenticationState> emit) {
+    final isAuthenticated =
+        onAppOpenUsecase.authenticationRepository.isAuthenticated();
+
+    if (isAuthenticated) {
+      emit(Authenticated());
+    } else {
+      emit(Unauthenticated());
     }
   }
 }
