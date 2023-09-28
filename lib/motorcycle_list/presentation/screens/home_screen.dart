@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:rentzy_rpl/motorcycle_detail/presentation/screen/motorcycle_detail_screen.dart';
 import 'package:rentzy_rpl/motorcycle_list/presentation/bloc/home_bloc.dart';
 import 'package:rentzy_rpl/motorcycle_list/presentation/components/brands_filter_item.dart';
 import 'package:rentzy_rpl/motorcycle_list/presentation/components/unit_item_card.dart';
@@ -49,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: GNav(
               gap: 4,
               tabBackgroundColor: Color(0xffF1F1F1),
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               iconSize: 20,
               textStyle: TextStyle(
                 fontSize: 14,
@@ -196,13 +197,24 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisSpacing: 8,
                       ),
                       itemCount: state.unitList?.length,
-                      itemBuilder: (ctx, idx) => UnitItemCard(
-                        imageUrl: state.unitList?[idx].imageUrl,
-                        name: state.unitList?[idx].name,
-                        pricePerDay: state.unitList?[idx].pricePerDay,
-                        rating: state.unitList?[idx].rating,
-                        brands: state.unitList?[idx].brands,
-                        yearManufactured: state.unitList?[idx].yearManufactured,
+                      itemBuilder: (ctx, idx) => GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MotorcycleDetailScreen(
+                                    unitsEntity: state.unitList![idx])),
+                          );
+                        },
+                        child: UnitItemCard(
+                          imageUrl: state.unitList?[idx].imageUrl,
+                          name: state.unitList?[idx].name,
+                          pricePerDay: state.unitList?[idx].pricePerDay,
+                          rating: state.unitList?[idx].rating,
+                          brands: state.unitList?[idx].brands,
+                          yearManufactured:
+                              state.unitList?[idx].yearManufactured,
+                        ),
                       ),
                     ),
                   )

@@ -7,6 +7,7 @@ import 'package:rentzy_rpl/authentication/domain/usecase/login_using_email_passw
 import 'package:rentzy_rpl/authentication/domain/usecase/on_app_open_usecase.dart';
 import 'package:rentzy_rpl/authentication/domain/usecase/register_user_usecase.dart';
 import 'package:rentzy_rpl/authentication/presentation/bloc/authentication_bloc.dart';
+import 'package:rentzy_rpl/motorcycle_detail/presentation/bloc/motorcycle_detail_bloc.dart';
 import 'package:rentzy_rpl/motorcycle_list/data/datasource/brands_service.dart';
 import 'package:rentzy_rpl/motorcycle_list/data/datasource/units_service.dart';
 import 'package:rentzy_rpl/motorcycle_list/data/repository/motorcycle_list_repository_impl.dart';
@@ -49,5 +50,8 @@ Future<void> initializeDependencies() async {
   );
   injection.registerFactory<HomeBloc>(
     () => HomeBloc(injection(), injection()),
+  );
+  injection.registerFactory<MotorcycleDetailBloc>(
+    () => MotorcycleDetailBloc(),
   );
 }

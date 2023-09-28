@@ -5,10 +5,18 @@ sealed class HomeState extends Equatable {
   final List<UnitsEntity>? unitList;
   final FirebaseException? firebaseException;
 
-  const HomeState({this.brandsList, this.firebaseException, this.unitList});
+  const HomeState({
+    this.brandsList,
+    this.firebaseException,
+    this.unitList,
+  });
 
   @override
-  List<Object?> get props => [brandsList, firebaseException, unitList];
+  List<Object?> get props => [
+        brandsList,
+        firebaseException,
+        unitList,
+      ];
 }
 
 final class HomeInitial extends HomeState {}
