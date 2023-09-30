@@ -1,19 +1,18 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
 import 'package:rentzy_rpl/core/utils/date_utils.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'motorcycle_detail_event.dart';
-part 'motorcycle_detail_state.dart';
+part 'available_date_event.dart';
+part 'available_date_state.dart';
 
-class MotorcycleDetailBloc
-    extends Bloc<MotorcycleDetailEvent, MotorcycleDetailState> {
-  MotorcycleDetailBloc() : super(MotorcycleDetailInitial()) {
+class AvailableDateBloc extends Bloc<AvailableDateEvent, AvailableDateState> {
+  AvailableDateBloc() : super(AvailableDateInitial()) {
     on<OnSelectedMonth>(onSelectedMonth);
   }
 
   void onSelectedMonth(
-      OnSelectedMonth event, Emitter<MotorcycleDetailState> emit) {
+      OnSelectedMonth event, Emitter<AvailableDateState> emit) {
     emit(DataLoading());
 
     int totalDays = daysInMonth(

@@ -16,9 +16,8 @@ class MotorCycleRepositoryImpl implements MotorcycleRepository {
   }
 
   @override
-  Future<UnitsModel> getUnitSpecificData() {
-    // TODO: implement getUnitSpecificData
-    throw UnimplementedError();
+  Future<UnitsModel> getUnitSpecificData(String unitId) {
+    return unitsService.getUnitSpecificData(unitId);
   }
 
   @override

@@ -1,22 +1,22 @@
-part of 'motorcycle_detail_bloc.dart';
+part of 'available_date_bloc.dart';
 
-sealed class MotorcycleDetailState extends Equatable {
+sealed class AvailableDateState extends Equatable {
   final List<int>? listOfDates;
   final List<String>? daysOfMonths;
   final int? monthIndex;
 
-  const MotorcycleDetailState(
+  const AvailableDateState(
       {this.daysOfMonths, this.listOfDates, this.monthIndex});
 
   @override
   List<Object?> get props => [daysOfMonths, listOfDates, monthIndex];
 }
 
-final class MotorcycleDetailInitial extends MotorcycleDetailState {}
+final class AvailableDateInitial extends AvailableDateState {}
 
-final class DataLoading extends MotorcycleDetailState {}
+final class DataLoading extends AvailableDateState {}
 
-final class DateChanged extends MotorcycleDetailState {
+final class DateChanged extends AvailableDateState {
   const DateChanged(final List<int>? listOfDates,
       final List<String>? daysOfMonths, final int monthIndex)
       : super(

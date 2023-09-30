@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rentzy_rpl/available_date/presentation/bloc/available_date_bloc.dart';
+import 'package:rentzy_rpl/available_date/presentation/components/date_card.dart';
 import 'package:rentzy_rpl/core/utils/date_utils.dart';
-import 'package:rentzy_rpl/motorcycle_detail/presentation/bloc/motorcycle_detail_bloc.dart';
-import 'package:rentzy_rpl/motorcycle_detail/presentation/components/date_card.dart';
 import 'package:intl/intl.dart';
 
 class AvailableDateSection extends StatefulWidget {
@@ -19,14 +19,14 @@ class _AvailableDateSectionState extends State<AvailableDateSection> {
   @override
   void initState() {
     context
-        .read<MotorcycleDetailBloc>()
+        .read<AvailableDateBloc>()
         .add(OnSelectedMonth(DateTime.now().month - 1));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MotorcycleDetailBloc, MotorcycleDetailState>(
+    return BlocBuilder<AvailableDateBloc, AvailableDateState>(
       builder: (context, state) {
         if (state is DataLoading) {
           return const Center(
@@ -92,7 +92,7 @@ class _AvailableDateSectionState extends State<AvailableDateSection> {
                       final monthIndex = monthList.indexOf(value!);
 
                       context
-                          .read<MotorcycleDetailBloc>()
+                          .read<AvailableDateBloc>()
                           .add(OnSelectedMonth(monthIndex));
                       // print(state.listOfDates);
                     },

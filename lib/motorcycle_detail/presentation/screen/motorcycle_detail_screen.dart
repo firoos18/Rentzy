@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:rentzy_rpl/motorcycle_detail/presentation/components/available_date_section.dart';
+import 'package:rentzy_rpl/available_date/presentation/components/available_date_section.dart';
 import 'package:rentzy_rpl/motorcycle_detail/presentation/components/unit_specifications_card.dart';
 import 'package:rentzy_rpl/motorcycle_list/domain/entities/units_entity.dart';
+import 'package:rentzy_rpl/user_reviews/presentation/components/user_reviews_section.dart';
 
 class MotorcycleDetailScreen extends StatelessWidget {
   final UnitsEntity unitsEntity;
@@ -27,6 +28,7 @@ class MotorcycleDetailScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
                       unitsEntity.name!,
@@ -51,7 +53,7 @@ class MotorcycleDetailScreen extends StatelessWidget {
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(height: 16),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -60,22 +62,22 @@ class MotorcycleDetailScreen extends StatelessWidget {
                           fit: FlexFit.loose,
                           child: UnitSpecificationsCard(
                             category: 'Engine Capacity',
-                            specifications: '599cm3',
+                            specifications: unitsEntity.engineCapacity!,
                           ),
                         ),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Flexible(
                           flex: 1,
                           fit: FlexFit.loose,
                           child: UnitSpecificationsCard(
-                            category: 'Engine Capacity',
-                            specifications: '599cm3',
+                            category: 'Transmission',
+                            specifications: unitsEntity.transmission!,
                           ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 8),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -83,17 +85,17 @@ class MotorcycleDetailScreen extends StatelessWidget {
                           flex: 1,
                           fit: FlexFit.loose,
                           child: UnitSpecificationsCard(
-                            category: 'Engine Capacity',
-                            specifications: '599cm3',
+                            category: 'Tank Capacity',
+                            specifications: unitsEntity.tankCapacity!,
                           ),
                         ),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Flexible(
                           flex: 1,
                           fit: FlexFit.loose,
                           child: UnitSpecificationsCard(
-                            category: 'Engine Capacity',
-                            specifications: '599cm3',
+                            category: 'Top Speed',
+                            specifications: unitsEntity.topSpeed!,
                           ),
                         ),
                       ],
@@ -112,6 +114,8 @@ class MotorcycleDetailScreen extends StatelessWidget {
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                     ),
+                    const SizedBox(height: 16),
+                    const UserReviewsSection(),
                   ],
                 ),
               )

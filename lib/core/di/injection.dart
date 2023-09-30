@@ -7,7 +7,8 @@ import 'package:rentzy_rpl/authentication/domain/usecase/login_using_email_passw
 import 'package:rentzy_rpl/authentication/domain/usecase/on_app_open_usecase.dart';
 import 'package:rentzy_rpl/authentication/domain/usecase/register_user_usecase.dart';
 import 'package:rentzy_rpl/authentication/presentation/bloc/authentication_bloc.dart';
-import 'package:rentzy_rpl/motorcycle_detail/presentation/bloc/motorcycle_detail_bloc.dart';
+import 'package:rentzy_rpl/available_date/presentation/bloc/available_date_bloc.dart';
+import 'package:rentzy_rpl/motorcycle_detail/presentation/bloc/unit_detail_bloc.dart';
 import 'package:rentzy_rpl/motorcycle_list/data/datasource/brands_service.dart';
 import 'package:rentzy_rpl/motorcycle_list/data/datasource/units_service.dart';
 import 'package:rentzy_rpl/motorcycle_list/data/repository/motorcycle_list_repository_impl.dart';
@@ -15,6 +16,11 @@ import 'package:rentzy_rpl/motorcycle_list/domain/repository/motorcycle_list_rep
 import 'package:rentzy_rpl/motorcycle_list/domain/usecases/get_brands_list_usecase.dart';
 import 'package:rentzy_rpl/motorcycle_list/domain/usecases/get_units_data_usecase.dart';
 import 'package:rentzy_rpl/motorcycle_list/presentation/bloc/home_bloc.dart';
+import 'package:rentzy_rpl/user_reviews/data/datasources/user_reviews_services.dart';
+import 'package:rentzy_rpl/user_reviews/data/repository/user_reviews_repository_impl.dart';
+import 'package:rentzy_rpl/user_reviews/domain/repository/user_reviews_repository.dart';
+import 'package:rentzy_rpl/user_reviews/domain/usecases/get_user_reviews_usecases.dart';
+import 'package:rentzy_rpl/user_reviews/presentation/bloc/user_reviews_bloc.dart';
 
 final injection = GetIt.instance;
 
@@ -26,12 +32,17 @@ Future<void> initializeDependencies() async {
   // Services
   injection.registerSingleton<BrandsService>(BrandsService(injection()));
   injection.registerSingleton<UnitsService>(UnitsService(injection()));
+  injection
+      .registerSingleton<UserReviewsServices>(UserReviewsServices(injection()));
 
   // Repository
   injection.registerSingleton<AuthenticationRepository>(
       AuthenticationRepositoryImpl(injection()));
   injection.registerSingleton<MotorcycleRepository>(
     MotorCycleRepositoryImpl(injection(), injection()),
+  );
+  injection.registerSingleton<UserReviewsRepository>(
+    UserReviewsRepositoryImpl(injection()),
   );
 
   // Usecases
@@ -43,6 +54,8 @@ Future<void> initializeDependencies() async {
       GetBrandsListUseCase(injection()));
   injection
       .registerSingleton<GetUnitsDataUseCase>(GetUnitsDataUseCase(injection()));
+  injection.registerSingleton<GetUserReviewsUsecase>(
+      GetUserReviewsUsecase(injection()));
 
   // BLoCs
   injection.registerFactory<AuthenticationBloc>(
@@ -51,7 +64,13 @@ Future<void> initializeDependencies() async {
   injection.registerFactory<HomeBloc>(
     () => HomeBloc(injection(), injection()),
   );
-  injection.registerFactory<MotorcycleDetailBloc>(
-    () => MotorcycleDetailBloc(),
+  injection.registerFactory<UnitDetailBloc>(
+    () => UnitDetailBloc(),
+  );
+  injection.registerFactory<AvailableDateBloc>(
+    () => AvailableDateBloc(),
+  );
+  injection.registerFactory<UserReviewsBloc>(
+    () => UserReviewsBloc(injection()),
   );
 }

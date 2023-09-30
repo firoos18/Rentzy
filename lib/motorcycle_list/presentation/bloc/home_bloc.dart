@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:intl/intl.dart';
-import 'package:rentzy_rpl/core/utils/date_utils.dart';
 import 'package:rentzy_rpl/motorcycle_list/domain/entities/brand_filter_entity.dart';
 import 'package:rentzy_rpl/motorcycle_list/domain/entities/units_entity.dart';
 import 'package:rentzy_rpl/motorcycle_list/domain/usecases/get_brands_list_usecase.dart';

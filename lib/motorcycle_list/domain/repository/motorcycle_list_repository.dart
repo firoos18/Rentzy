@@ -6,5 +6,5 @@ abstract class MotorcycleRepository {
 
   Future<List<UnitsEntity>> getUnitsData();
 
-  Future<UnitsEntity> getUnitSpecificData();
+  Future<UnitsEntity> getUnitSpecificData(String unitId);
 }

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +8,7 @@ import 'package:rentzy_rpl/motorcycle_detail/presentation/screen/motorcycle_deta
 import 'package:rentzy_rpl/motorcycle_list/presentation/bloc/home_bloc.dart';
 import 'package:rentzy_rpl/motorcycle_list/presentation/components/brands_filter_item.dart';
 import 'package:rentzy_rpl/motorcycle_list/presentation/components/unit_item_card.dart';
+import 'package:rentzy_rpl/user_reviews/presentation/bloc/user_reviews_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -205,6 +207,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 builder: (context) => MotorcycleDetailScreen(
                                     unitsEntity: state.unitList![idx])),
                           );
+                          context.read<UserReviewsBloc>().add(OnGetUserReviews(
+                                state.unitList![idx].unitId,
+                                FirebaseAuth.instance.currentUser?.uid,
+                              ));
                         },
                         child: UnitItemCard(
                           imageUrl: state.unitList?[idx].imageUrl,

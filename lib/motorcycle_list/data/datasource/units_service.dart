@@ -10,12 +10,15 @@ class UnitsService {
     QuerySnapshot<Map<String, dynamic>> snapshot =
         await firebaseFirestore.collection('units').get();
 
-    for (var element in snapshot.docs) {
-      print(element.data());
-    }
-
     return snapshot.docs
         .map((docSnapshot) => UnitsModel.fromDocumentSnapshot(docSnapshot))
         .toList();
+  }
+
+  Future<UnitsModel> getUnitSpecificData(String? unitId) async {
+    DocumentSnapshot<Map<String, dynamic>> snapshot =
+        await firebaseFirestore.collection('units').doc(unitId).get();
+
+    return UnitsModel.fromDocumentSnapshot(snapshot);
   }
 }
