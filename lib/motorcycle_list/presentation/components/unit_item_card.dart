@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class UnitItemCard extends StatelessWidget {
   final String? imageUrl;
@@ -33,7 +34,10 @@ class UnitItemCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(6),
-              child: Image.network(imageUrl as String),
+              child: FadeInImage(
+                placeholder: MemoryImage(kTransparentImage),
+                image: NetworkImage(imageUrl!),
+              ),
             ),
             const SizedBox(height: 8),
             Row(

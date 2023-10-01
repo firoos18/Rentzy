@@ -21,4 +21,18 @@ class UnitsService {
 
     return UnitsModel.fromDocumentSnapshot(snapshot);
   }
+
+  Future<List<UnitsModel>> getUnitByBrand(List<String?> brandName) async {
+    if (brandName.isNotEmpty) {
+      QuerySnapshot<Map<String, dynamic>> snapshot = await firebaseFirestore
+          .collection('units')
+          .where('brands', whereIn: brandName)
+          .get();
+      return snapshot.docs
+          .map((docSnapshot) => UnitsModel.fromDocumentSnapshot(docSnapshot))
+          .toList();
+    } else {
+      return getUnitsData();
+    }
+  }
 }

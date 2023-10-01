@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:rentzy_rpl/authentication/presentation/bloc/authentication_bloc.dart';
-import 'package:rentzy_rpl/motorcycle_list/presentation/screens/home_screen.dart';
+import 'package:rentzy_rpl/tabs_screen.dart';
 
 class AuthenticationScreen extends StatefulWidget {
   final bool isLogin;
@@ -41,7 +41,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
             Navigator.pop(context);
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              MaterialPageRoute(builder: (context) => const TabsScreen()),
             );
           }
           if (state is AuthenticationLoading) {

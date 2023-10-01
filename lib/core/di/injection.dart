@@ -14,8 +14,10 @@ import 'package:rentzy_rpl/motorcycle_list/data/datasource/units_service.dart';
 import 'package:rentzy_rpl/motorcycle_list/data/repository/motorcycle_list_repository_impl.dart';
 import 'package:rentzy_rpl/motorcycle_list/domain/repository/motorcycle_list_repository.dart';
 import 'package:rentzy_rpl/motorcycle_list/domain/usecases/get_brands_list_usecase.dart';
+import 'package:rentzy_rpl/motorcycle_list/domain/usecases/get_unit_by_brand_usecase.dart';
 import 'package:rentzy_rpl/motorcycle_list/domain/usecases/get_units_data_usecase.dart';
-import 'package:rentzy_rpl/motorcycle_list/presentation/bloc/home_bloc.dart';
+import 'package:rentzy_rpl/motorcycle_list/presentation/blocs/brand_filter/brand_filter_bloc.dart';
+import 'package:rentzy_rpl/motorcycle_list/presentation/blocs/unit_list/unit_list_bloc.dart';
 import 'package:rentzy_rpl/user_reviews/data/datasources/user_reviews_services.dart';
 import 'package:rentzy_rpl/user_reviews/data/repository/user_reviews_repository_impl.dart';
 import 'package:rentzy_rpl/user_reviews/domain/repository/user_reviews_repository.dart';
@@ -56,13 +58,15 @@ Future<void> initializeDependencies() async {
       .registerSingleton<GetUnitsDataUseCase>(GetUnitsDataUseCase(injection()));
   injection.registerSingleton<GetUserReviewsUsecase>(
       GetUserReviewsUsecase(injection()));
+  injection.registerSingleton<GetUnitByBrandUsecase>(
+      GetUnitByBrandUsecase(injection()));
 
   // BLoCs
   injection.registerFactory<AuthenticationBloc>(
     () => AuthenticationBloc(injection(), injection(), injection()),
   );
-  injection.registerFactory<HomeBloc>(
-    () => HomeBloc(injection(), injection()),
+  injection.registerFactory<UnitListBloc>(
+    () => UnitListBloc(injection(), injection()),
   );
   injection.registerFactory<UnitDetailBloc>(
     () => UnitDetailBloc(),
@@ -72,5 +76,8 @@ Future<void> initializeDependencies() async {
   );
   injection.registerFactory<UserReviewsBloc>(
     () => UserReviewsBloc(injection()),
+  );
+  injection.registerFactory<BrandFilterBloc>(
+    () => BrandFilterBloc(injection()),
   );
 }

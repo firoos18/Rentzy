@@ -14,6 +14,7 @@ class UserReviewsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.all(4),
       width: double.infinity,
       height: 48,
       decoration: BoxDecoration(
@@ -24,62 +25,61 @@ class UserReviewsCard extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(4),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                if (userReviewsEntity.imageUrl != null)
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(userReviewsEntity.imageUrl!),
-                    radius: 24,
-                  ),
-                if (userReviewsEntity.imageUrl == null)
-                  CircleAvatar(
-                    backgroundColor: const Color(0xff0E0F0E).withOpacity(0.5),
-                    radius: 24,
-                  ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      userReviewsEntity.username!,
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: const Color(0xff0E0F0E).withOpacity(0.7),
-                      ),
-                    ),
-                    Text(
-                      userReviewsEntity.reviews!,
-                      style: const TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xff0E0F0E),
-                      ),
-                    ),
-                  ],
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              if (userReviewsEntity.imageUrl != null)
+                CircleAvatar(
+                  backgroundImage: NetworkImage(userReviewsEntity.imageUrl!),
+                  radius: 24,
                 ),
-              ],
-            ),
-            Row(
-              children: [
-                const Icon(
-                  FeatherIcons.star,
-                  size: 14,
-                  weight: 0.7,
+              if (userReviewsEntity.imageUrl == null)
+                CircleAvatar(
+                  backgroundColor: const Color(0xff0E0F0E).withOpacity(0.5),
+                  radius: 24,
                 ),
-                Text(
-                  userReviewsEntity.rating.toString(),
-                  style:
-                      const TextStyle(fontSize: 14, color: Color(0xff0E0F0E)),
-                )
-              ],
-            )
-          ],
-        ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    userReviewsEntity.username!,
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: const Color(0xff0E0F0E).withOpacity(0.7),
+                    ),
+                  ),
+                  Text(
+                    userReviewsEntity.reviews!,
+                    style: const TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xff0E0F0E),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Icon(
+                FeatherIcons.star,
+                size: 14,
+                weight: 0.7,
+              ),
+              Text(
+                userReviewsEntity.rating.toString(),
+                style: const TextStyle(fontSize: 14, color: Color(0xff0E0F0E)),
+              ),
+              const SizedBox(width: 4),
+            ],
+          )
+        ],
       ),
     );
   }

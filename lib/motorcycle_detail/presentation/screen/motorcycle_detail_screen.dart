@@ -3,6 +3,7 @@ import 'package:rentzy_rpl/available_date/presentation/components/available_date
 import 'package:rentzy_rpl/motorcycle_detail/presentation/components/unit_specifications_card.dart';
 import 'package:rentzy_rpl/motorcycle_list/domain/entities/units_entity.dart';
 import 'package:rentzy_rpl/user_reviews/presentation/components/user_reviews_section.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class MotorcycleDetailScreen extends StatelessWidget {
   final UnitsEntity unitsEntity;
@@ -18,11 +19,12 @@ class MotorcycleDetailScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.network(
-                unitsEntity.imageUrl!,
-                fit: BoxFit.cover,
-                width: double.infinity,
+              FadeInImage(
+                placeholder: MemoryImage(kTransparentImage),
+                image: NetworkImage(unitsEntity.imageUrl!),
                 height: 300,
+                width: double.infinity,
+                fit: BoxFit.cover,
               ),
               Padding(
                 padding: const EdgeInsets.all(16),
