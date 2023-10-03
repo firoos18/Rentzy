@@ -8,6 +8,12 @@ import 'package:rentzy_rpl/authentication/domain/usecase/on_app_open_usecase.dar
 import 'package:rentzy_rpl/authentication/domain/usecase/register_user_usecase.dart';
 import 'package:rentzy_rpl/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:rentzy_rpl/available_date/presentation/bloc/available_date_bloc.dart';
+import 'package:rentzy_rpl/instant_booking/data/datasource/available_units_service.dart';
+import 'package:rentzy_rpl/instant_booking/data/repository/instant_booking_repository_impl.dart';
+import 'package:rentzy_rpl/instant_booking/domain/repository/instant_booking_repository.dart';
+import 'package:rentzy_rpl/instant_booking/domain/usecases/get_available_units_usecase.dart';
+import 'package:rentzy_rpl/instant_booking/presentation/bloc/available_units/available_units_bloc.dart';
+import 'package:rentzy_rpl/instant_booking/presentation/bloc/date_picker/date_picker_bloc.dart';
 import 'package:rentzy_rpl/motorcycle_detail/presentation/bloc/unit_detail_bloc.dart';
 import 'package:rentzy_rpl/motorcycle_list/data/datasource/brands_service.dart';
 import 'package:rentzy_rpl/motorcycle_list/data/datasource/units_service.dart';
@@ -36,6 +42,8 @@ Future<void> initializeDependencies() async {
   injection.registerSingleton<UnitsService>(UnitsService(injection()));
   injection
       .registerSingleton<UserReviewsServices>(UserReviewsServices(injection()));
+  injection.registerSingleton<AvailableUnitsService>(
+      AvailableUnitsService(injection()));
 
   // Repository
   injection.registerSingleton<AuthenticationRepository>(
@@ -45,6 +53,9 @@ Future<void> initializeDependencies() async {
   );
   injection.registerSingleton<UserReviewsRepository>(
     UserReviewsRepositoryImpl(injection()),
+  );
+  injection.registerSingleton<InstantBookingRepository>(
+    InstantBookingRepositoryImpl(injection()),
   );
 
   // Usecases
@@ -60,6 +71,9 @@ Future<void> initializeDependencies() async {
       GetUserReviewsUsecase(injection()));
   injection.registerSingleton<GetUnitByBrandUsecase>(
       GetUnitByBrandUsecase(injection()));
+
+  injection.registerSingleton<GetAvailableUnitsUsecase>(
+      GetAvailableUnitsUsecase(injection()));
 
   // BLoCs
   injection.registerFactory<AuthenticationBloc>(
@@ -79,5 +93,11 @@ Future<void> initializeDependencies() async {
   );
   injection.registerFactory<BrandFilterBloc>(
     () => BrandFilterBloc(injection()),
+  );
+  injection.registerFactory<DatePickerBloc>(
+    () => DatePickerBloc(),
+  );
+  injection.registerFactory<AvailableUnitsBloc>(
+    () => AvailableUnitsBloc(injection()),
   );
 }

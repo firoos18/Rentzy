@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rentzy_rpl/instant_booking/presentation/bloc/available_units/available_units_bloc.dart';
+import 'package:rentzy_rpl/instant_booking/presentation/components/unit_item_card.dart';
 import 'package:rentzy_rpl/motorcycle_detail/presentation/screen/motorcycle_detail_screen.dart';
-import 'package:rentzy_rpl/motorcycle_list/presentation/blocs/unit_list/unit_list_bloc.dart';
-import 'package:rentzy_rpl/motorcycle_list/presentation/components/unit_item_card.dart';
 import 'package:rentzy_rpl/user_reviews/presentation/bloc/user_reviews_bloc.dart';
 
 class UnitListSection extends StatefulWidget {
@@ -17,15 +17,15 @@ class UnitListSection extends StatefulWidget {
 class _UnitListSectionState extends State<UnitListSection> {
   @override
   void initState() {
-    context.read<UnitListBloc>().add(OnGetUnitData());
+    context.read<AvailableUnitsBloc>().add(OnScreenChanged());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UnitListBloc, UnitListState>(
+    return BlocBuilder<AvailableUnitsBloc, AvailableUnitsState>(
       builder: (context, state) {
-        if (state is UnitDataLoading) {
+        if (state is AvailableUnitsLoading) {
           return const Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,7 +36,7 @@ class _UnitListSectionState extends State<UnitListSection> {
             ],
           );
         }
-        if (state is UnitDataLoaded) {
+        if (state is AvailableUnitsLoaded) {
           return Flexible(
             fit: FlexFit.loose,
             child: GridView.builder(
@@ -48,33 +48,36 @@ class _UnitListSectionState extends State<UnitListSection> {
                 mainAxisSpacing: 8,
                 crossAxisSpacing: 8,
               ),
-              itemCount: state.unitList?.length,
+              itemCount: state.unitsList?.length,
               itemBuilder: (ctx, idx) => GestureDetector(
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => MotorcycleDetailScreen(
-                            unitsEntity: state.unitList![idx])),
+                      builder: (context) => MotorcycleDetailScreen(
+                          unitsEntity: state.unitsList![idx]),
+                    ),
                   );
-                  context.read<UserReviewsBloc>().add(OnGetUserReviews(
-                        state.unitList![idx].unitId,
-                        FirebaseAuth.instance.currentUser?.uid,
-                      ));
+                  context.read<UserReviewsBloc>().add(
+                        OnGetUserReviews(
+                          state.unitsList![idx].unitId,
+                          FirebaseAuth.instance.currentUser?.uid,
+                        ),
+                      );
                 },
                 child: UnitItemCard(
-                  imageUrl: state.unitList?[idx].imageUrl,
-                  name: state.unitList?[idx].name,
-                  pricePerDay: state.unitList?[idx].pricePerDay,
-                  rating: state.unitList?[idx].rating,
-                  brands: state.unitList?[idx].brands,
-                  yearManufactured: state.unitList?[idx].yearManufactured,
+                  imageUrl: state.unitsList?[idx].imageUrl,
+                  name: state.unitsList?[idx].name,
+                  pricePerDay: state.unitsList?[idx].pricePerDay,
+                  rating: state.unitsList?[idx].rating,
+                  brands: state.unitsList?[idx].brands,
+                  yearManufactured: state.unitsList?[idx].yearManufactured,
                 ),
               ),
             ),
           );
         }
-        if (state is UnitDataEmpty) {
+        if (state is AvailableUnitsEmpty) {
           return const Center(
             child: Text('No available units at the moment'),
           );

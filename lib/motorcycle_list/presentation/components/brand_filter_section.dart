@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentzy_rpl/motorcycle_list/presentation/blocs/brand_filter/brand_filter_bloc.dart';
-import 'package:rentzy_rpl/motorcycle_list/presentation/blocs/unit_list/unit_list_bloc.dart';
 import 'package:rentzy_rpl/motorcycle_list/presentation/components/brands_filter_item.dart';
 
 class BrandFilterSection extends StatefulWidget {
@@ -21,8 +19,6 @@ class _BrandFilterSectionState extends State<BrandFilterSection> {
 
   @override
   Widget build(BuildContext context) {
-    const bool isSelected = true;
-
     return BlocBuilder<BrandFilterBloc, BrandFilterState>(
       builder: (context, state) {
         if (state is DataLoading) {

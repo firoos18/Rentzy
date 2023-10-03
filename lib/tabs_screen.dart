@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:rentzy_rpl/instant_booking/presentation/screens/instant_booking_screen.dart';
 import 'package:rentzy_rpl/motorcycle_list/presentation/screens/home_screen.dart';
 
 class TabsScreen extends StatefulWidget {
@@ -13,12 +14,15 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> {
   final List<Widget> screenList = [
     const HomeScreen(),
-    const Center(
-      child: Text('Instant Booking'),
-    ),
+    const InstantBookingScreen(),
     const Center(
       child: Text('User Profile'),
     ),
+  ];
+  final List<String> title = [
+    'Rentzy',
+    'Instant Booking',
+    'User Profile',
   ];
   int activeScreen = 0;
 
@@ -32,9 +36,9 @@ class _TabsScreenState extends State<TabsScreen> {
     return Scaffold(
       extendBody: true,
       appBar: AppBar(
-        title: const Text(
-          'Rentzy',
-          style: TextStyle(
+        title: Text(
+          title[activeScreen],
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
