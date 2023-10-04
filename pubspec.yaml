@@ -44,6 +44,7 @@ dependencies:
   google_nav_bar: ^5.0.6
   intl: ^0.18.1
   transparent_image: ^2.0.1
+  duration: ^3.0.13
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to

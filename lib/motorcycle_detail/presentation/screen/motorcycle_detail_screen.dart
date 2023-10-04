@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rentzy_rpl/available_date/presentation/components/available_date_section.dart';
+import 'package:rentzy_rpl/motorcycle_detail/presentation/components/book_bottomsheet.dart';
 import 'package:rentzy_rpl/motorcycle_detail/presentation/components/unit_specifications_card.dart';
 import 'package:rentzy_rpl/motorcycle_list/domain/entities/units_entity.dart';
 import 'package:rentzy_rpl/user_reviews/presentation/components/user_reviews_section.dart';
@@ -118,6 +119,55 @@ class MotorcycleDetailScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     const UserReviewsSection(),
+                    const SizedBox(height: 24),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Per day',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                            Text(
+                              'Rp${unitsEntity.pricePerDay}',
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (ctx) =>
+                                  BookBottomsheet(unitsEntity: unitsEntity),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(245, 60),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            backgroundColor: const Color(0xff0E0F0E),
+                          ),
+                          child: const Text(
+                            'Book Now',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xffFAFAFA),
+                            ),
+                          ),
+                        )
+                      ],
+                    )
                   ],
                 ),
               )

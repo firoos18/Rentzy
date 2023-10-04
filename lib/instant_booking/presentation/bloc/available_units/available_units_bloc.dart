@@ -19,6 +19,7 @@ class AvailableUnitsBloc
 
   void onDatePickerClicked(
       OnDatePickerClicked event, Emitter<AvailableUnitsState> emit) async {
+    emit(AvailableUnitsLoading());
     final String date =
         DateTime(now.year, event.monthIndex! + 1, event.dayDate!)
             .toString()
@@ -28,7 +29,11 @@ class AvailableUnitsBloc
         .instantBookingRepository
         .getAvailableUnits(date);
 
-    emit(AvailableUnitsLoaded(unitsList: unitsList));
+    if (unitsList.isNotEmpty) {
+      emit(AvailableUnitsLoaded(unitsList: unitsList));
+    } else {
+      emit(AvailableUnitsEmpty());
+    }
   }
 
   void onScreenChanged(
