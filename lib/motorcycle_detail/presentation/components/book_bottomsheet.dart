@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:intl/intl.dart';
+import 'package:rentzy_rpl/checkout/data/models/checkout_model.dart';
+import 'package:rentzy_rpl/checkout/presentation/bloc/checkout_bloc.dart';
 import 'package:rentzy_rpl/core/utils/date_utils.dart';
 import 'package:rentzy_rpl/motorcycle_list/domain/entities/units_entity.dart';
 
@@ -240,7 +243,23 @@ class _BookBottomsheetState extends State<BookBottomsheet> {
               ],
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                context.read<CheckoutBloc>().add(
+                      OnCheckoutButtonPressed(
+                        checkoutModel: CheckoutModel(
+                          unitId: widget.unitsEntity.unitId,
+                          daysCount: daysCount,
+                          endDate: DateFormat('yyyy-MM-dd')
+                              .format(selectedEndDate!)
+                              .toString(),
+                          startDate: DateFormat('yyyy-MM-dd')
+                              .format(selectedStartDate!)
+                              .toString(),
+                          totalPrice: totalPrice,
+                        ),
+                      ),
+                    );
+              },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(double.infinity, 56),
                 backgroundColor: const Color(0xff0E0F0E),

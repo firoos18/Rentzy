@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentzy_rpl/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:rentzy_rpl/available_date/presentation/bloc/available_date_bloc.dart';
+import 'package:rentzy_rpl/checkout/presentation/bloc/checkout_bloc.dart';
 import 'package:rentzy_rpl/core/di/injection.dart';
 import 'package:rentzy_rpl/instant_booking/presentation/bloc/available_units/available_units_bloc.dart';
 import 'package:rentzy_rpl/instant_booking/presentation/bloc/date_picker/date_picker_bloc.dart';
@@ -33,6 +34,7 @@ Future<void> main() async {
       BlocProvider<BrandFilterBloc>(create: (_) => injection()),
       BlocProvider<DatePickerBloc>(create: (_) => injection()),
       BlocProvider<AvailableUnitsBloc>(create: (_) => injection()),
+      BlocProvider<CheckoutBloc>(create: (_) => injection()),
     ],
     child: MaterialApp(
       theme: ThemeData(

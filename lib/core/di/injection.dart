@@ -8,6 +8,11 @@ import 'package:rentzy_rpl/authentication/domain/usecase/on_app_open_usecase.dar
 import 'package:rentzy_rpl/authentication/domain/usecase/register_user_usecase.dart';
 import 'package:rentzy_rpl/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:rentzy_rpl/available_date/presentation/bloc/available_date_bloc.dart';
+import 'package:rentzy_rpl/checkout/data/datasources/checkout_services.dart';
+import 'package:rentzy_rpl/checkout/data/repository/checkout_repository_impl.dart';
+import 'package:rentzy_rpl/checkout/domain/repository/checkout_repository.dart';
+import 'package:rentzy_rpl/checkout/domain/usecases/post_checkout_data_usecase.dart';
+import 'package:rentzy_rpl/checkout/presentation/bloc/checkout_bloc.dart';
 import 'package:rentzy_rpl/instant_booking/data/datasource/available_units_service.dart';
 import 'package:rentzy_rpl/instant_booking/data/repository/instant_booking_repository_impl.dart';
 import 'package:rentzy_rpl/instant_booking/domain/repository/instant_booking_repository.dart';
@@ -44,6 +49,8 @@ Future<void> initializeDependencies() async {
       .registerSingleton<UserReviewsServices>(UserReviewsServices(injection()));
   injection.registerSingleton<AvailableUnitsService>(
       AvailableUnitsService(injection()));
+  injection.registerSingleton<CheckoutServices>(
+      CheckoutServices(injection(), injection()));
 
   // Repository
   injection.registerSingleton<AuthenticationRepository>(
@@ -56,6 +63,9 @@ Future<void> initializeDependencies() async {
   );
   injection.registerSingleton<InstantBookingRepository>(
     InstantBookingRepositoryImpl(injection()),
+  );
+  injection.registerSingleton<CheckoutRepository>(
+    CheckoutRepositoryImpl(injection()),
   );
 
   // Usecases
@@ -71,9 +81,10 @@ Future<void> initializeDependencies() async {
       GetUserReviewsUsecase(injection()));
   injection.registerSingleton<GetUnitByBrandUsecase>(
       GetUnitByBrandUsecase(injection()));
-
   injection.registerSingleton<GetAvailableUnitsUsecase>(
       GetAvailableUnitsUsecase(injection()));
+  injection.registerSingleton<PostCheckoutDataUsecase>(
+      PostCheckoutDataUsecase(injection()));
 
   // BLoCs
   injection.registerFactory<AuthenticationBloc>(
@@ -99,5 +110,8 @@ Future<void> initializeDependencies() async {
   );
   injection.registerFactory<AvailableUnitsBloc>(
     () => AvailableUnitsBloc(injection()),
+  );
+  injection.registerFactory<CheckoutBloc>(
+    () => CheckoutBloc(injection()),
   );
 }
